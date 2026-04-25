@@ -19,7 +19,7 @@ def get_cookies():
 @app.route('/sms')
 def fetch_sms():
     date = request.args.get('date', '25/04/2026')
-    url = f"https://ivasms.com/portal/liv-sms/get-otp-messages?date={date}"
+    url = f"https://ivasms.com/portal/live-sms/get-otp-messages?date={date}"
     
     # These headers make the bot look like a real mobile browser
     headers = {
