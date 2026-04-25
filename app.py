@@ -4,26 +4,23 @@ import requests
 app = Flask(__name__)
 
 # --- YOUR CONFIG ---
+# Ensure these match exactly. I added the -100 for your group.
 TELEGRAM_TOKEN = "8668872857:AAFKr-vAtAA_Jc5tiL_nM_upVHZStX0qE7Q"
-# I am using the ID you provided. If this fails, we will know why.
-TELEGRAM_CHAT_ID = "-1003126309534" 
+TELEGRAM_CHAT_ID = "-1003126309534"
 
 @app.route('/')
 def home():
+    # This tries to send a message the moment you open the link
     url = f"https://api.telegram.org/bot{TELEGRAM_TOKEN}/sendMessage"
-    payload = {
-        "chat_id": TELEGRAM_CHAT_ID, 
-        "text": "🚨 *Bridge Alert:* If you see this, Telegram is WORKING!",
-        "parse_mode": "Markdown"
-    }
+    text = "🔔 *Bridge Status:* System is Online!\nSalvation, if you see this, the connection is fixed."
     
     try:
-        response = requests.post(url, json=payload, timeout=10)
+        response = requests.post(url, json={"chat_id": TELEGRAM_CHAT_ID, "text": text, "parse_mode": "Markdown"}, timeout=10)
         res_data = response.json()
         return jsonify({
-            "bridge_status": "Active",
-            "telegram_connected": res_data.get("ok", False),
-            "telegram_error_details": res_data if not res_data.get("ok") else "None! Check your phone."
+            "status": "Vercel Updated",
+            "telegram_sent": res_data.get("ok", False),
+            "details": res_data
         })
     except Exception as e:
         return jsonify({"error": str(e)})
