@@ -5,7 +5,7 @@ from datetime import datetime
 app = Flask(__name__)
 
 # --- YOUR CONFIG ---
-TELEGRAM_TOKEN = "8668872857:AAFKr-vAtAA_Jc5tiLtX0qE7Q" 
+TELEGRAM_TOKEN = "8668872857:AAFKr-vAtAA_Jc5tiL_nM_upVHZStX0qE7Q" 
 TELEGRAM_CHAT_ID = "1003126309534"
 
 def send_telegram(text):
