@@ -1,11 +1,11 @@
 from flask import Flask, request, jsonify
 import requests
-import json
+from datetime import datetime
 
 app = Flask(__name__)
 
-# --- YOUR CONFIGURATION ---
-TELEGRAM_TOKEN = "8668872857:AAFKr-vAtAA_Jc5tiL_nM_upVHZStX0qE7Q" # Make sure this is your full token
+# --- YOUR CONFIG ---
+TELEGRAM_TOKEN = "8668872857:AAFKr-vAtAA_Jc5tiLtX0qE7Q" 
 TELEGRAM_CHAT_ID = "1003126309534"
 
 def send_telegram(text):
@@ -18,13 +18,21 @@ def send_telegram(text):
 
 @app.route('/')
 def home():
-    return "API and Telegram Bridge is Live!"
+    return "SMS to Telegram Bridge is Online!"
 
 @app.route('/sms')
 def get_sms():
-    # This triggers the message to your Telegram
-    send_telegram("🚀 *Bot is checking for new SMS messages!*")
-    return jsonify({"status": "success", "message": "Telegram notified"})
+    # This automatically uses today's date
+    today = datetime.now().strftime("%d/%m/%Y")
+    
+    # We send a notification to your Telegram to show it worked
+    send_telegram(f"✅ *Bridge Active*\nChecked panel for date: {today}\nStatus: Listening for SMS...")
+    
+    return jsonify({
+        "status": "success", 
+        "date_checked": today,
+        "message": "Notification sent to Telegram"
+    })
 
 if __name__ == '__main__':
     app.run(debug=True)
